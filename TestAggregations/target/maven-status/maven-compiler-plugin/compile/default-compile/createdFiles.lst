@@ -1,0 +1,8 @@
+BalanceAggregationWindowFunction.class
+BalanceEvent.class
+TestClass$1.class
+MyWindowFunction.class
+TestClass.class
+MyProcessFunction.class
+AggregatedBalanceProcessWindowFunction.class
+AggregatedBalanceEvent.class
