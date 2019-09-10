@@ -15,6 +15,8 @@ import org.apache.flink.core.fs.FileSystem.WriteMode;
 import org.apache.flink.streaming.api.datastream.BroadcastStream;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.datastream.KeyedStream;
+import org.apache.flink.streaming.api.environment.CheckpointConfig;
+import org.apache.flink.streaming.api.environment.CheckpointConfig.ExternalizedCheckpointCleanup;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.api.common.time.Time;
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer011;
@@ -32,7 +34,11 @@ public class TestClass {
 		
 		final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 		
-		  
+		   CheckpointConfig config = env.getCheckpointConfig();
+		   
+		   config.enableExternalizedCheckpoints(ExternalizedCheckpointCleanup.RETAIN_ON_CANCELLATION);
+		
+		
 		   env.enableCheckpointing(1000);
 
 	        // advanced options:
