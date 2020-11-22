@@ -1,0 +1,24 @@
+docker run -it -p 7000:7000 -p 5000:5000  --cpus=".5" --memory=100m  test8-jmx 
+
+FROM openjdk:8-jdk-alpine
+ARG JAR_FILE=target/*.jar
+COPY ${JAR_FILE} app.jar
+COPY docker-entrypoint.sh /docker-entrypoint.sh
+ENTRYPOINT ["/docker-entrypoint.sh"]
+
+                                                
+ENTRYPOINT ["java","-jar","/app.jar", " -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=5000  -Dcom.sun.management.jmxremote.rmi.port=5000  -Djava.rmi.server.hostname=192.168.99.100  -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Djava.io.tmpdir=/var/tmp --debug"]
+
+
+java -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=5000  -Dcom.sun.management.jmxremote.rmi.port=5000  -Djava.rmi.server.hostname=192.168.99.100  -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -jar microservice-0.0.1-SNAPSHOT.jar  --debug
+
+
+mvn archetype:generate \
+    -DarchetypeGroupId=org.apache.flink \
+    -DarchetypeArtifactId=flink-demo \
+    -DarchetypeVersion=1.11.2 \
+    -DgroupId=flinkdemo \
+    -DartifactId=flinkdemo \
+    -Dversion=0.1 \
+    -Dpackage=com.demo \
+    -DinteractiveMode=false
